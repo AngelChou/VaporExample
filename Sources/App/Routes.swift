@@ -20,6 +20,17 @@ extension Droplet {
 
         get("description") { req in return req.description }
         
+        get("/name",":name") { request in
+            if let name = request.parameters["name"]?.string {
+                return "Hello \(name)!"
+            }
+            return "Error retrieving parameters."
+        }
+        
+        get("/view") { request in
+            return try self.view.make("view.html")
+        }
+        
         try resource("posts", PostController.self)
     }
 }
